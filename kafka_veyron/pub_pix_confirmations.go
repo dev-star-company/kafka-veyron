@@ -4,43 +4,43 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/dev-star-company/custom-validate/validate"
 	"github.com/dev-star-company/kafka-veyron/topics"
 	"github.com/segmentio/kafka-go"
 )
 
-type PixConfirmation struct {
-	TransactionId string
-	Bank          string
-	Amount        float64
-	At            time.Time
-	ReferenceId   *string
+type PixRecebimento struct {
+	EndToEndId  string          `json:"endToEndId"`
+	Valor       string          `json:"valor"`
+	Horario     time.Time       `json:"horario"`
+	InfoPagador string          `json:"infoPagador"`
+	NomePagador string          `json:"nomePagador"`
+	Pagador     PagadorRecebido `json:"pagador"`
+	Devolucoes  []PixDevolucao  `json:"devolucoes"`
+	Banco       string          `json:"banco"`
+	ClientID    string          `json:"clientId"`
 }
 
-func NewPixConfirmation(transactionId, bank string, amount float64, at time.Time, referenceId *string) (*PixConfirmation, error) {
-	fields := map[string]string{
-		"TransactionId": "required",
-		"Bank":          "required",
-		"Amount":        "required,gt=0",
-		"At":            "required",
-	}
-
-	msg := &PixConfirmation{
-		TransactionId: transactionId,
-		Bank:          bank,
-		Amount:        amount,
-		At:            at,
-		ReferenceId:   referenceId,
-	}
-
-	if err := validate.Validate(fields, msg); err != nil {
-		return nil, err
-	}
-
-	return msg, nil
+type PixDevolucao struct {
+	Id      string              `json:"id"`
+	RtrId   string              `json:"rtrId"`
+	Valor   string              `json:"valor"`
+	Horario PixDevolucaoHorario `json:"horario"`
+	Status  string              `json:"status"`
+	Motivo  string              `json:"motivo"`
 }
 
-func (p *KafkaVeyroner) PublishToPixConfirmation(message Message[PixConfirmation]) error {
+type PixDevolucaoHorario struct {
+	Solicitacao time.Time `json:"solicitacao"`
+	Liquidacao  time.Time `json:"liquidacao"`
+}
+
+type PagadorRecebido struct {
+	Nome string  `json:"nome"`
+	CPF  *string `json:"cpf"`
+	CNPJ *string `json:"cnpj"`
+}
+
+func (p *KafkaVeyroner) PublishToPixConfirmation(message Message[PixRecebimento]) error {
 	conn, err := p.Connect(topics.PIX_CONFIRMATIONS)
 	if err != nil {
 		return err

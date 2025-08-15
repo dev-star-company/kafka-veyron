@@ -10,8 +10,8 @@ import (
 	"github.com/segmentio/kafka-go"
 )
 
-func (p *KafkaVeyroner) SubToPixConfirmation(ctx context.Context) (<-chan SubResponse[PixConfirmation], error) {
-	ch := make(chan SubResponse[PixConfirmation])
+func (p *KafkaVeyroner) SubToPixRecebimento(ctx context.Context) (<-chan SubResponse[PixRecebimento], error) {
+	ch := make(chan SubResponse[PixRecebimento])
 	conn, err := p.ConnectToTopic(topics.PIX_CONFIRMATIONS)
 	if err != nil {
 		return nil, err
@@ -40,7 +40,7 @@ func (p *KafkaVeyroner) SubToPixConfirmation(ctx context.Context) (<-chan SubRes
 			if err != nil {
 				return // Exit on context cancellation or reader close
 			}
-			var pixConfirmation Message[PixConfirmation]
+			var pixConfirmation Message[PixRecebimento]
 			if err := json.Unmarshal(msg.Value, &pixConfirmation); err != nil {
 				continue // skip invalid messages
 			}
@@ -48,7 +48,7 @@ func (p *KafkaVeyroner) SubToPixConfirmation(ctx context.Context) (<-chan SubRes
 				continue // skip messages from the same publisher
 			}
 			select {
-			case ch <- SubResponse[PixConfirmation]{Message: pixConfirmation, CommitFn: func() error { return r.CommitMessages(ctx, msg) }}:
+			case ch <- SubResponse[PixRecebimento]{Message: pixConfirmation, CommitFn: func() error { return r.CommitMessages(ctx, msg) }}:
 			case <-ctx.Done():
 				return
 			}
