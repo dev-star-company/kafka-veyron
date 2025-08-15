@@ -14,7 +14,7 @@ type PixRecebimento struct {
 	Horario     time.Time       `json:"horario"`
 	InfoPagador string          `json:"infoPagador"`
 	NomePagador string          `json:"nomePagador"`
-	Pagador     PagadorRecebido `json:"pagador"`
+	Pagador     Pagador `json:"pagador"`
 	Devolucoes  []PixDevolucao  `json:"devolucoes"`
 	Banco       string          `json:"banco"`
 	ClientID    string          `json:"clientId"`
@@ -34,7 +34,7 @@ type PixDevolucaoHorario struct {
 	Liquidacao  time.Time `json:"liquidacao"`
 }
 
-type PagadorRecebido struct {
+type Pagador struct {
 	Nome string  `json:"nome"`
 	CPF  *string `json:"cpf"`
 	CNPJ *string `json:"cnpj"`
