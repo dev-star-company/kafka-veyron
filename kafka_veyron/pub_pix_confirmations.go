@@ -31,7 +31,7 @@ type PixDevolucao struct {
 
 type PixDevolucaoHorario struct {
 	Solicitacao time.Time `json:"solicitacao"`
-	Liquidacao  time.Time `json:"liquidacao"`
+	Liquidacao  *time.Time `json:"liquidacao"`
 }
 
 type Pagador struct {
