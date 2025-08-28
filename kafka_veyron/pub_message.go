@@ -15,7 +15,6 @@ type WhatsappMsg struct {
 	From         string
 	Client       string
 	Recipient    string
-	Recipient_id string
 	MessageType  string
 	Message      string
 	IsFromMe     bool
@@ -34,7 +33,6 @@ func NewWhatsappMsg(uuid, from, client, recipient, messageType, message string, 
 		"IsFromMe":     "required,boolean",
 		"IsGroup":      "required,boolean",
 		"ReceivedAt":   "required",
-		"Recipient_id": "omitempty",
 	}
 
 	msg := &WhatsappMsg{
@@ -47,7 +45,6 @@ func NewWhatsappMsg(uuid, from, client, recipient, messageType, message string, 
 		IsFromMe:     isFromMe,
 		IsGroup:      isGroup,
 		ReceivedAt:   receivedAt,
-		Recipient_id: recipient_id,
 	}
 
 	if err := validate.Validate(fields, msg); err != nil {
