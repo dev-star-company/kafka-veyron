@@ -22,7 +22,7 @@ type WhatsappMsg struct {
 	ReceivedAt   time.Time
 }
 
-func NewWhatsappMsg(uuid, from, client, recipient, messageType, message string, isFromMe, isGroup bool, receivedAt time.Time, recipient_id string) (*WhatsappMsg, error) {
+func NewWhatsappMsg(uuid, from, client, recipient, messageType, message string, isFromMe, isGroup bool, receivedAt time.Time) (*WhatsappMsg, error) {
 	fields := map[string]string{
 		"Uuid":         "required,uuid",
 		"From":         "required",
