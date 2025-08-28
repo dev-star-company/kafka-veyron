@@ -11,40 +11,43 @@ import (
 )
 
 type WhatsappMsg struct {
-	Uuid        string
-	From        string
-	Client      string
-	Recipient   string
-	MessageType string
-	Message     string
-	IsFromMe    bool
-	IsGroup     bool
-	ReceivedAt  time.Time
+	Uuid         string
+	From         string
+	Client       string
+	Recipient    string
+	Recipient_id string
+	MessageType  string
+	Message      string
+	IsFromMe     bool
+	IsGroup      bool
+	ReceivedAt   time.Time
 }
 
-func NewWhatsappMsg(uuid, from, client, recipient, messageType, message string, isFromMe, isGroup bool, receivedAt time.Time) (*WhatsappMsg, error) {
+func NewWhatsappMsg(uuid, from, client, recipient, messageType, message string, isFromMe, isGroup bool, receivedAt time.Time, recipient_id string) (*WhatsappMsg, error) {
 	fields := map[string]string{
-		"Uuid":        "required,uuid",
-		"From":        "required",
-		"Client":      "required",
-		"Recipient":   "required",
-		"MessageType": "required",
-		"Message":     "Required",
-		"IsFromMe":    "required,boolean",
-		"IsGroup":     "required,boolean",
-		"ReceivedAt":  "required",
+		"Uuid":         "required,uuid",
+		"From":         "required",
+		"Client":       "required",
+		"Recipient":    "required",
+		"MessageType":  "required",
+		"Message":      "Required",
+		"IsFromMe":     "required,boolean",
+		"IsGroup":      "required,boolean",
+		"ReceivedAt":   "required",
+		"Recipient_id": "omitempty",
 	}
 
 	msg := &WhatsappMsg{
-		Uuid:        uuid,
-		From:        from,
-		Client:      client,
-		Recipient:   recipient,
-		MessageType: messageType,
-		Message:     message,
-		IsFromMe:    isFromMe,
-		IsGroup:     isGroup,
-		ReceivedAt:  receivedAt,
+		Uuid:         uuid,
+		From:         from,
+		Client:       client,
+		Recipient:    recipient,
+		MessageType:  messageType,
+		Message:      message,
+		IsFromMe:     isFromMe,
+		IsGroup:      isGroup,
+		ReceivedAt:   receivedAt,
+		Recipient_id: recipient_id,
 	}
 
 	if err := validate.Validate(fields, msg); err != nil {

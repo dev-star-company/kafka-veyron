@@ -9,15 +9,15 @@ import (
 )
 
 type PixRecebimento struct {
-	EndToEndId  string          `json:"endToEndId"`
-	Valor       string          `json:"valor"`
-	Horario     time.Time       `json:"horario"`
-	InfoPagador string          `json:"infoPagador"`
-	NomePagador string          `json:"nomePagador"`
-	Pagador     Pagador `json:"pagador"`
-	Devolucoes  []PixDevolucao  `json:"devolucoes"`
-	Banco       string          `json:"banco"`
-	ClientID    string          `json:"clientId"`
+	EndToEndId  string         `json:"endToEndId"`
+	Valor       string         `json:"valor"`
+	Horario     time.Time      `json:"horario"`
+	InfoPagador string         `json:"infoPagador"`
+	NomePagador string         `json:"nomePagador"`
+	Pagador     Pagador        `json:"pagador"`
+	Devolucoes  []PixDevolucao `json:"devolucoes"`
+	Banco       string         `json:"banco"`
+	ClientID    string         `json:"clientId"`
 }
 
 type PixDevolucao struct {
@@ -30,7 +30,7 @@ type PixDevolucao struct {
 }
 
 type PixDevolucaoHorario struct {
-	Solicitacao time.Time `json:"solicitacao"`
+	Solicitacao time.Time  `json:"solicitacao"`
 	Liquidacao  *time.Time `json:"liquidacao"`
 }
 
